@@ -1,0 +1,6 @@
+node_modules
+docs
+*.log
+*.iml
+*.ipr
+*.iws
