@@ -1,0 +1,40 @@
+{
+  "name": "data-record",
+  "description": "Data Record",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "data-record.js",
+  "bin": {
+    "ldf-client": "./bin/data-record"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:rubensworks/DataReplay.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rubensworks/DataReplay/issues"
+  },
+  "scripts": {
+    "docs": "./node_modules/jsdoc/jsdoc.js -c jsdoc.json README.md lib",
+    "test": "./node_modules/mocha/bin/mocha",
+    "hint": "./node_modules/jshint/bin/jshint bin/* lib test"
+  },
+  "dependencies": {
+    "jsdom": "0.8.8",
+    "minimist": "1.1.0",
+    "request": "2.49.0"
+  },
+  "devDependencies": {
+    "jsdoc": "~3.3.0",
+    "jshint": "~2.1.10",
+    "mocha": "~1.17.1",
+    "sinon": "~1.9.0",
+    "chai": "~1.9.0",
+    "sinon-chai": "~2.5.0",
+    "pre-commit": "~0.0.9"
+  },
+  "pre-commit": [
+    "hint",
+    "test"
+  ]
+}
