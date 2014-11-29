@@ -8,17 +8,18 @@ var timeUtils = require('../lib/util/TimeUtils'),
 
 // Retrieve and check arguments
 var args = require('minimist')(process.argv.slice(2));
-if (args._.length < 3 || args._.length > 3 || args.h || args.help) {
-  console.error('usage: data-record duration granularity url');
+if (args._.length < 4 || args._.length > 4 || args.h || args.help) {
+  console.error('usage: data-record duration granularity url basepath');
   console.error('       duration:    number + unit (1ms, 10s ...');
   console.error('       granularity: number + unit (1ms, 10s ...)');
   console.error('       allowed units: [s, m, h, d]');
   return process.exit(1);
 }
 
-var url         = args._.pop(),
+var basePath    = args._.pop(),
+    url         = args._.pop(),
     granularity = timeUtils.normalizeToMillis(args._.pop()),
     duration    = timeUtils.normalizeToMillis(args._.pop());
 
 var recorder = new Recorder(duration, granularity);
-recorder.record(new HttpDataHandler(url), new FileHandler("/tmp/fetching/"));
+recorder.record(new HttpDataHandler({url: url}), new FileHandler(basePath));
