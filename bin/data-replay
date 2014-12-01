@@ -7,15 +7,17 @@ var fs           = require('fs'),
 
 // Retrieve and check arguments
 var args = require('minimist')(process.argv.slice(2));
-if (args._.length < 1 || args._.length > 1 || args.h || args.help) {
-  console.error('usage: data-replay configFile');
+if (args._.length < 1 || args._.length > 2 || args.h || args.help) {
+  console.error('usage: data-replay [playbackSpeed] configFile');
+  console.error('       playbackSpeed:    *number or /number (*60 to play everything 60 times faster than recorded)');
   return process.exit(1);
 }
 
-var config = JSON.parse(fs.readFileSync(args._.pop()));
+var config        = JSON.parse(fs.readFileSync(args._.pop())),
+    playbackSpeed = args._.length == 1 ? args._.pop() : "*1";
 
 var reader  = typeFactory.init(config.reader,  '../io/'),
     monitor = typeFactory.init(config.monitor, '../monitors/'),
     player  = new Player(reader);
 
-player.play(monitor);
+player.play(monitor, playbackSpeed);
