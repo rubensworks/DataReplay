@@ -1,0 +1,15 @@
+{
+  "datahandler": {
+    "type": "HttpDataHandler",
+    "config": {
+      "url": "https://irail.be/stations/NMBS/008892007",
+      "accept": "text/json"
+    }
+  },
+  "writer": {
+    "type": "FileHandler",
+    "config": {
+      "basePath": "/tmp/datareplay/"
+    }
+  }
+}

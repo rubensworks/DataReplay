@@ -1,18 +1,21 @@
 #!/usr/bin/env node
 /* Script to replay series of snapshots. */
 
-var Player  = require('../lib/Player'),
-    FileHandler  = require('../lib/io/FileHandler'),
-    HttpMonitor  = require('../lib/monitors/HttpMonitor');
+var fs           = require('fs'),
+    typeFactory  = require('../lib/util/TypeFactory'),
+    Player       = require('../lib/Player');
 
 // Retrieve and check arguments
 var args = require('minimist')(process.argv.slice(2));
 if (args._.length < 1 || args._.length > 1 || args.h || args.help) {
-  console.error('usage: data-replay basepath');
+  console.error('usage: data-replay configFile');
   return process.exit(1);
 }
 
-var basePath = args._.pop();
+var config = JSON.parse(fs.readFileSync(args._.pop()));
 
-var player = new Player(new FileHandler(basePath));
-player.play(new HttpMonitor("127.0.0.1", 3000));
+var reader  = typeFactory.init(config.reader,  '../io/'),
+    monitor = typeFactory.init(config.monitor, '../monitors/'),
+    player  = new Player(reader);
+
+player.play(monitor);
